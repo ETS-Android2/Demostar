@@ -42,13 +42,17 @@ public class UserLoginAcitivity extends AppCompatActivity {
         btLoginUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 final String userEmail = etUserLoginMail.getText().toString();
                 final String userPassword = etUserLoginPwd.getText().toString();
                 //login validation
                 if(userEmail.isEmpty() || userPassword.isEmpty())
                 {
                     Toast.makeText(UserLoginAcitivity.this,"Fill all fields", Toast.LENGTH_SHORT).show();
+                }
+                else if(userEmail.equalsIgnoreCase("Admin") && userPassword.equalsIgnoreCase("admin")){
+
+                    startActivity(new Intent(UserLoginAcitivity.this,AdminUpdateActivity.class));
+                    finish();
                 }
                 else{
                     //perform query
@@ -78,5 +82,11 @@ public class UserLoginAcitivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        moveTaskToBack(false);
     }
 }

@@ -9,6 +9,7 @@ import androidx.room.TypeConverter;
 import androidx.room.TypeConverters;
 
 @Database(entities = MovieImage.class, version = 1, exportSchema = false)
+
 public abstract class ImageDatabase extends RoomDatabase {
     private static ImageDatabase imageDatabase = null;
     private static final String databaseName = "movies";

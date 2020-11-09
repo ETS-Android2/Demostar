@@ -20,20 +20,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // assigning id to their corresponding button
-        btAdminLogin = findViewById(R.id.btnAdminLogin);
         btUserLogin = findViewById(R.id.btnUserLogin);
         btUserReg = findViewById(R.id.btnUserReg);
 
-        // String name = getIntent().getStringExtra("name");
-
-        // navigating to the next page according the user pressed the button
-        // admin Login
-        btAdminLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, AdminActivity.class));
-            }
-        });
 
         // user Login
         btUserLogin.setOnClickListener(new View.OnClickListener() {

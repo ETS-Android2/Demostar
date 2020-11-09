@@ -9,7 +9,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ShowMovieActivity"></activity>
         <activity android:name=".AdminUpdateActivity" />
         <activity android:name=".SelectedMovieActivity" />
         <activity
@@ -17,7 +16,6 @@
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".UserRegActivity" />
         <activity android:name=".UserLoginAcitivity" />
-        <activity android:name=".AdminActivity" />
         <activity
             android:name=".SplashScreen"
             android:theme="@style/splashScreen">

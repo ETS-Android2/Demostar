@@ -26,6 +26,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
@@ -33,13 +34,9 @@ public class HomeActivity extends AppCompatActivity{
     // Initialising the toolbar and recycler view for displaying movies
     Toolbar toolbar;
     RecyclerView recyclerView;
-
-    // arraylist for storing usermodel
-    List<UserModel> userModelList = new ArrayList<>();
-    UsersAdapter usersAdapter;
-
     ImageDao imageDao;
     ImageAdapter imageAdapter;
+    List<MovieImage> movieList , adminMovieList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,20 +51,13 @@ public class HomeActivity extends AppCompatActivity{
         this.setSupportActionBar(toolbar);
         this.getSupportActionBar().setTitle("");
 
-      //   recyclerView.setLayoutManager(new LinearLayoutManager(this));
-      //   recyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
-       //  assigning values to the view
-        // userModelList.add(new UserModel("Avengers End Game",R.drawable.avengers));
-       // userModelList.add(new UserModel("Avengers Infinity War",R.drawable.infinity));
-       // userModelList.add(new UserModel("The Conjuring", R.drawable.conjuring));
-        // usersAdapter = new UsersAdapter(userModelList,this);
-       // recyclerView.setAdapter(usersAdapter);
-
         // movie images
         imageDao = ImageDatabase.getImageDatabase(this).imageDao();
-        imageAdapter = new ImageAdapter(imageDao.getAllImage());
+        movieList = imageDao.getAllImage();
+        imageAdapter = new ImageAdapter(movieList,this::selectedUser);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(imageAdapter);
+
     }
 
     // to create options on top right
@@ -102,7 +92,8 @@ public class HomeActivity extends AppCompatActivity{
 
         else if(id == R.id.filter)
         {
-            startActivity(new Intent(HomeActivity.this, AdminUpdateActivity.class));
+            //startActivity(new Intent(HomeActivity.this, AdminUpdateActivity.class));
+            showFilterDialog();
             return true;
         }
 
@@ -111,13 +102,69 @@ public class HomeActivity extends AppCompatActivity{
             return true;
         }
 
-        else if(id == R.id.add)
+        else if(id == R.id.logout)
         {
-            startActivity(new Intent(HomeActivity.this, AdminUpdateActivity.class));
+            showLogout();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showFilterDialog() {
+        String [] options = {"Genre", "Languages"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Sort By");
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                if(which == 0) {
+                    showGenre();
+                }
+                else if(which == 1) {
+                    showLanguages();
+                }
+            }
+        });
+        builder.create().show(); //show Dialog
+    }
+    private void showGenre() {
+        String [] options = {"Action", "Education", "Motivation", "Horror", "Adventure", "Thriller", "Sports", "Comedy", "Science Fiction"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Sort By");
+
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                imageAdapter.getFilter().filter(options[which]);
+                imageAdapter.notifyDataSetChanged();
+            }
+        });
+        builder.create().show(); //show Dialog
+    }
+
+
+
+    private void showLanguages() {
+        String [] options = {"English", "Tamil", "French", "Japanese"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Sort By");
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                imageAdapter.getFilter().filter(options[which]);
+                imageAdapter.notifyDataSetChanged();
+
+            }
+        });
+        builder.create().show(); //show Dialog
+    }
+
+
+    private void showLogout() {
+        startActivity(new Intent(HomeActivity.this,MainActivity.class));
+        finish();
     }
 
     private void showSortDialog() {
@@ -128,36 +175,34 @@ public class HomeActivity extends AppCompatActivity{
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                if(which ==0) { //Ascending is clicked
-                   // Collections.sort(userModelList,UserModel.BY_TITLE_ASCENDING);
-                   // usersAdapter.notifyDataSetChanged();
-                   // Collections.sort(imageDao.getAllImage(),MovieImage.A_Z);
-                   // imageAdapter.notifyDataSetChanged();
+                if(which == 0) { //Ascending is clicked
+                    Collections.sort(movieList, MovieImage.A_Z);
+                    imageAdapter.notifyDataSetChanged();
                 }
 
-                if(which ==1) { //Descending is clicked
-//                    Collections.sort(userModelList,UserModel.BY_TITLE_DESCENDING);
-//                    usersAdapter.notifyDataSetChanged();
-                   // Collections.sort(imageDao.getAllImage(),MovieImage.Z_A);
-                   // imageAdapter.notifyDataSetChanged();
-
+                if(which == 1) { //Descending is clicked
+                    Collections.sort(movieList, MovieImage.Z_A);
+                    imageAdapter.notifyDataSetChanged();
                 }
 
-                if(which ==2) { //Rating is clicked
-
+                if(which == 2) { //Rating is clicked
+                    Collections.sort(movieList, MovieImage.RATING);
+                    imageAdapter.notifyDataSetChanged();
                 }
 
-                if(which ==3) { //Recently Added is clicked
-
+                if(which == 3) { //Recently Added is clicked
+                    Collections.sort(movieList, MovieImage.RECENT);
+                    imageAdapter.notifyDataSetChanged();
                 }
             }
         });
         builder.create().show(); //show Dialog
     }
 
-//    @Override
-//    public void selectedUser(MovieImage movieImage) {
-//        startActivity(new Intent(HomeActivity.this, SelectedMovieActivity.class).
-//                putExtra("data",movieImage));
-//    }
+    public void selectedUser(MovieImage movieImage) {
+        startActivity(new Intent(HomeActivity.this, SelectedMovieActivity.class).
+                putExtra("data",movieImage));
+    }
+
+
 }

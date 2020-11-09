@@ -21,6 +21,10 @@
         android:icon="@drawable/ic_baseline_filter_list_24"
         app:showAsAction="always"
         />
+    <item
+        android:id="@+id/logout"
+        android:title="Logout"
+        />
 
 
 </menu>

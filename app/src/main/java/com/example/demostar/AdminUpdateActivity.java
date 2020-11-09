@@ -32,13 +32,16 @@ import android.widget.Toast;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AdminUpdateActivity extends AppCompatActivity {
 
     ImageView imgUpload;
-    EditText etAdminMovieName;
+    EditText etAdminMovieName , etAdminMovieRating;
+    EditText etAdminMovieLang, etAdminMovieGenre , etAdminMovieYear;
     private static int PICK_IMAGE = 123;
     Uri imagePath;
     Button btUpload , btNext;
@@ -50,7 +53,11 @@ public class AdminUpdateActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin_update);
 
         imgUpload = findViewById(R.id.imgViewUpload);
-        etAdminMovieName = findViewById(R.id.edtAdminMovieName);
+        etAdminMovieName = findViewById(R.id.edtAdminUpdateMovieName);
+        etAdminMovieRating = findViewById(R.id.edtAdminUpdateMovieRating);
+        etAdminMovieGenre = findViewById(R.id.edtAdminUpdateMovieGenre);
+        etAdminMovieLang = findViewById(R.id.edtAdminUpdateMovieLanguage);
+        etAdminMovieYear = findViewById(R.id.edtAdminUpdateMovieYear);
         btUpload = findViewById(R.id.btnUpload);
         btNext = findViewById(R.id.btnNext);
 
@@ -85,6 +92,10 @@ public class AdminUpdateActivity extends AppCompatActivity {
                        bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imagePath);
                        movieImage.setMovieImage(DataConverter.convertImageToByteArray(bitmap));
                        movieImage.setMovieName(etAdminMovieName.getText().toString());
+                       movieImage.setMovieRating(etAdminMovieRating.getText().toString());
+                       movieImage.setMovieGenre(etAdminMovieGenre.getText().toString());
+                       movieImage.setMovieLanguage(etAdminMovieLang.getText().toString());
+                       movieImage.setMovieYear(etAdminMovieYear.getText().toString());
                        imageDao.insertImage(movieImage);
                        Toast.makeText(AdminUpdateActivity.this,"Uploaded Successfully",Toast.LENGTH_LONG).show();
                    }
@@ -109,7 +120,10 @@ public class AdminUpdateActivity extends AppCompatActivity {
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
-
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(false);
+    }
 }
 
 

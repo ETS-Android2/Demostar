@@ -1,8 +1,10 @@
 package com.example.demostar;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,6 +24,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -46,11 +50,13 @@ public class AdminUpdateActivity extends AppCompatActivity {
     Uri imagePath;
     Button btUpload , btNext;
     Bitmap bitmap;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_update);
+
 
         imgUpload = findViewById(R.id.imgViewUpload);
         etAdminMovieName = findViewById(R.id.edtAdminUpdateMovieName);
@@ -123,6 +129,23 @@ public class AdminUpdateActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         moveTaskToBack(false);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.logout,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.logoutAdmin)
+        {
+            startActivity(new Intent(AdminUpdateActivity.this,MainActivity.class));
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
 

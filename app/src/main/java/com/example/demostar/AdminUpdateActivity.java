@@ -131,22 +131,7 @@ public class AdminUpdateActivity extends AppCompatActivity {
         moveTaskToBack(false);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.logout,menu);
-        return super.onCreateOptionsMenu(menu);
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        if(id == R.id.logoutAdmin)
-        {
-            startActivity(new Intent(AdminUpdateActivity.this,MainActivity.class));
-            finish();
-        }
-        return super.onOptionsItemSelected(item);
-    }
 }
 
 

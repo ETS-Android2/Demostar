@@ -1,3 +1,28 @@
 <resources>
     <string name="app_name">Demostar</string>
+
+    <string-array name="Genre">
+        <item>Select Genre</item>
+        <item>Action</item>
+        <item>Education</item>
+        <item>Motivation</item>
+        <item>Horror</item>
+        <item>Adventure</item>
+        <item>Thriller</item>
+        <item>Sports</item>
+        <item>Comedy</item>
+        <item>Science Fiction</item>
+    </string-array>
+
+
+    <string-array name="Languages">
+        <item>Select Language</item>
+        <item>English</item>
+        <item>Tamil</item>
+        <item>Telugu</item>
+        <item>Malayalam</item>
+        <item>Kannadam</item>
+        <item>Japanese</item>
+    </string-array>
+
 </resources>

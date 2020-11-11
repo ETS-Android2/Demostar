@@ -16,6 +16,6 @@
     <color name="userRow">#403fc68b</color>
 
     <!-- icon color-->
-    <color name="iconColor">#145798</color>
+    <color name="iconColor">#000000</color>
 
 </resources>

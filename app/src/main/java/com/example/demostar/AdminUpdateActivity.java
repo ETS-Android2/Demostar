@@ -27,9 +27,12 @@ import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,7 +48,9 @@ public class AdminUpdateActivity extends AppCompatActivity {
 
     ImageView imgUpload;
     EditText etAdminMovieName , etAdminMovieRating;
-    EditText etAdminMovieLang, etAdminMovieGenre , etAdminMovieYear;
+    EditText etAdminMovieYear;
+    Spinner spinAdminMovieGenre, spinAdminMovieLanguage;
+    String genre , language;
     private static int PICK_IMAGE = 123;
     Uri imagePath;
     Button btUpload , btNext;
@@ -57,15 +62,51 @@ public class AdminUpdateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_update);
 
-
         imgUpload = findViewById(R.id.imgViewUpload);
         etAdminMovieName = findViewById(R.id.edtAdminUpdateMovieName);
         etAdminMovieRating = findViewById(R.id.edtAdminUpdateMovieRating);
-        etAdminMovieGenre = findViewById(R.id.edtAdminUpdateMovieGenre);
-        etAdminMovieLang = findViewById(R.id.edtAdminUpdateMovieLanguage);
+        spinAdminMovieGenre = findViewById(R.id.spinnerGenre);
+        spinAdminMovieLanguage = findViewById(R.id.spinnerLanguage);
         etAdminMovieYear = findViewById(R.id.edtAdminUpdateMovieYear);
         btUpload = findViewById(R.id.btnUpload);
         btNext = findViewById(R.id.btnNext);
+
+        // for genre Spinner
+        ArrayAdapter<CharSequence> genAdapter = ArrayAdapter.createFromResource(AdminUpdateActivity.this, R.array.Genre, android.R.layout.simple_spinner_item);
+        genAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinAdminMovieGenre.setAdapter(genAdapter);
+        String [] genres = {"Action", "Education", "Motivation", "Horror", "Adventure", "Thriller", "Sports", "Comedy", "Science Fiction"};
+        spinAdminMovieGenre.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                genre = genres[i];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
+        // For languages spinner
+       ArrayAdapter<CharSequence> langAdapter = ArrayAdapter.createFromResource(AdminUpdateActivity.this, R.array.Languages, android.R.layout.simple_spinner_item);
+        langAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinAdminMovieLanguage.setAdapter(langAdapter);
+        String [] languages = {"English", "Tamil", "Telugu", "Malayalam", "Kannadam","Japanese"};
+        spinAdminMovieLanguage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                language = languages[i];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
 
         btNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,8 +140,8 @@ public class AdminUpdateActivity extends AppCompatActivity {
                        movieImage.setMovieImage(DataConverter.convertImageToByteArray(bitmap));
                        movieImage.setMovieName(etAdminMovieName.getText().toString());
                        movieImage.setMovieRating(etAdminMovieRating.getText().toString());
-                       movieImage.setMovieGenre(etAdminMovieGenre.getText().toString());
-                       movieImage.setMovieLanguage(etAdminMovieLang.getText().toString());
+                       movieImage.setMovieGenre(genre);
+                       movieImage.setMovieLanguage(language);
                        movieImage.setMovieYear(etAdminMovieYear.getText().toString());
                        imageDao.insertImage(movieImage);
                        Toast.makeText(AdminUpdateActivity.this,"Uploaded Successfully",Toast.LENGTH_LONG).show();

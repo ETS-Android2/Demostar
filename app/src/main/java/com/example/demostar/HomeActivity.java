@@ -147,7 +147,7 @@ public class HomeActivity extends AppCompatActivity{
 
 
     private void showLanguages() {
-        String [] options = {"English", "Tamil", "French", "Japanese"};
+        String [] options = {"English", "Tamil", "Telugu", "Malayalam", "Kannadam","Japanese"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Sort By");
         builder.setItems(options, new DialogInterface.OnClickListener() {

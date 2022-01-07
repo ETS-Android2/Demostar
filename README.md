@@ -1,5 +1,6 @@
 # Demostar (Android Application)
-Demo Project (Similar to OTT)
+
+# Demo Video
 
 https://user-images.githubusercontent.com/44563718/148518051-8266c2fe-f062-4187-8f63-5b06b5c91635.mp4
 

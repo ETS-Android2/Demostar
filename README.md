@@ -1,6 +1,8 @@
 # Demostar (Android Application)
 Demo Project (Similar to OTT)
 
+[![Watch the video](https://github.com/manoj228/Demostar/issues/1#issue-1096111395)]
+
 # Features of the application :
 
 * Every information of the user and details of the movies can be stored in #Room Database (offline) <br/>
